@@ -4,6 +4,7 @@ import com.mik.gateway.service.LoginUser;
 import com.mik.gateway.service.UserDetailService;
 import com.mik.gateway.token.SmsCodeToken;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AbstractUserDetailsReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,12 +30,15 @@ public class UsernamePassroedAuthenticationManager extends AbstractUserDetailsRe
             return Mono.just(authentication);
         }
         UsernamePasswordAuthenticationToken smsCodeToken = (UsernamePasswordAuthenticationToken)authentication;
-        String username = authentication.getCredentials().toString();
+        String username = authentication.getPrincipal().toString();
 //        LoginUser loginUser = (LoginUser)smsCodeToken.getPrincipal();
-        if(!"888888".equals(smsCodeToken.getPrincipal())){
+        if(StringUtils.isBlank(username)){
+            throw new UsernameNotFoundException("用户名不存在");
+        }
+        if(!"888888".equals(smsCodeToken.getCredentials())){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
-        smsCodeToken.setAuthenticated(true);
+//        smsCodeToken.setAuthenticated(true);
         LoginUser userDetails = (LoginUser)retrieveUser(username).block();
         smsCodeToken.setDetails(userDetails);
         return Mono.just(smsCodeToken);

@@ -1,5 +1,6 @@
 package com.mik.gateway.config;
 
+import com.mik.gateway.convert.UserConvert;
 import com.mik.gateway.handler.DefaultDeniedHandler;
 import com.mik.gateway.handler.DefaultFailHandler;
 import com.mik.gateway.handler.DefaultSuccessHandler;
@@ -10,12 +11,16 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
+import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 
 import java.util.LinkedList;
 
@@ -34,6 +39,8 @@ public class SecurityConfig {
     UserDetailService userDetailService;
     @Resource
     DefaultDeniedHandler defaultDeniedHandler;
+    @Resource
+    UserConvert userConvert;
 
 //    @Resource
 //    SmsCodeAuthenticationManager smsCodeAuthenticationManager;
@@ -47,6 +54,7 @@ public class SecurityConfig {
                 .cors(corsSpec -> corsSpec.disable())
                 .csrf(csrfSpec -> csrfSpec.disable())
                 .httpBasic(httpBasicSpec -> httpBasicSpec.disable())
+                .addFilterAt(authenticationWebFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
                 .exceptionHandling(exceptionHandlingSpec -> exceptionHandlingSpec.accessDeniedHandler(defaultDeniedHandler))
                 .authorizeExchange(exchanges -> {
                     exchanges.pathMatchers("/login").permitAll()
@@ -59,6 +67,19 @@ public class SecurityConfig {
                             .authenticationFailureHandler(defaultFailHandler);
                 });
         return http.build();
+    }
+
+    private AuthenticationWebFilter authenticationWebFilter() {
+        AuthenticationWebFilter filter = new AuthenticationWebFilter(new SmsCodeAuthenticationManager(userDetailService));
+
+        filter.setServerAuthenticationConverter(userConvert);
+        filter.setAuthenticationSuccessHandler(defaultSuccessHandler);
+        filter.setAuthenticationFailureHandler(defaultFailHandler);
+        filter.setRequiresAuthenticationMatcher(
+                ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/sms/login")
+        );
+
+        return filter;
     }
 
     @Bean

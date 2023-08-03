@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.authentication.ServerFormLoginAuthenticationConverter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -15,16 +16,17 @@ public class UserConvert extends ServerFormLoginAuthenticationConverter {
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
-        String username = exchange.getAttribute("username");
-        String password = exchange.getAttribute("password");
-        String type = exchange.getAttribute("type");
-        Authentication token;
-        if("1".equals(type)){
-            token = new UsernamePasswordAuthenticationToken(username, password);
-        }else {
-            token = new SmsCodeToken(new ArrayList<>(), username, password);
-        }
+        String mobile = exchange.getAttribute("mobile");
+        String code = exchange.getAttribute("code");
+        Mono<MultiValueMap<String, String>> map = exchange.getFormData();
+        return map.map(this::createAuthentication);
+    }
 
-        return Mono.just(token);
+    private SmsCodeToken createAuthentication(MultiValueMap<String, String> data) {
+        String mobile = data.getFirst("mobile");
+        String code = data.getFirst("code");
+        SmsCodeToken token = new SmsCodeToken(new ArrayList<>(), mobile, code);
+
+        return token;
     }
 }
