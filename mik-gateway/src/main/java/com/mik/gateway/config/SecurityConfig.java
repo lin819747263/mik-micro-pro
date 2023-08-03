@@ -1,0 +1,105 @@
+package com.mik.gateway.config;
+
+import com.mik.gateway.handler.DefaultDeniedHandler;
+import com.mik.gateway.handler.DefaultFailHandler;
+import com.mik.gateway.handler.DefaultSuccessHandler;
+import com.mik.gateway.manager.SmsCodeAuthenticationManager;
+import com.mik.gateway.manager.UsernamePassroedAuthenticationManager;
+import com.mik.gateway.service.UserDetailService;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
+import java.util.LinkedList;
+
+
+@Slf4j
+@EnableWebFluxSecurity
+@Configuration
+public class SecurityConfig {
+
+    @Resource
+    DefaultFailHandler defaultFailHandler;
+
+    @Resource
+    DefaultSuccessHandler defaultSuccessHandler;
+    @Resource
+    UserDetailService userDetailService;
+    @Resource
+    DefaultDeniedHandler defaultDeniedHandler;
+
+//    @Resource
+//    SmsCodeAuthenticationManager smsCodeAuthenticationManager;
+//
+//    @Resource
+//    UsernamePassroedAuthenticationManager usernamePassroedAuthenticationManager;
+
+    @Bean
+    SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        http
+                .cors(corsSpec -> corsSpec.disable())
+                .csrf(csrfSpec -> csrfSpec.disable())
+                .httpBasic(httpBasicSpec -> httpBasicSpec.disable())
+                .exceptionHandling(exceptionHandlingSpec -> exceptionHandlingSpec.accessDeniedHandler(defaultDeniedHandler))
+                .authorizeExchange(exchanges -> {
+                    exchanges.pathMatchers("/login").permitAll()
+                            .anyExchange().permitAll();
+                        }
+                ).formLogin(formLoginSpec -> {
+                    formLoginSpec
+                            .authenticationManager(new UsernamePassroedAuthenticationManager(userDetailService))
+                            .authenticationSuccessHandler(defaultSuccessHandler)
+                            .authenticationFailureHandler(defaultFailHandler);
+                });
+        return http.build();
+    }
+
+    @Bean
+    SecurityWebFilterChain smsFilterChain(ServerHttpSecurity http) {
+        http
+                .cors(corsSpec -> corsSpec.disable())
+                .csrf(csrfSpec -> csrfSpec.disable())
+                .httpBasic(httpBasicSpec -> httpBasicSpec.disable())
+                .exceptionHandling(exceptionHandlingSpec -> exceptionHandlingSpec.accessDeniedHandler(defaultDeniedHandler))
+                .authorizeExchange(exchanges -> {
+                            exchanges.pathMatchers("/sms/login").permitAll()
+                                    .anyExchange().permitAll();
+                        }
+                ).formLogin(formLoginSpec -> {
+            formLoginSpec
+                    .loginPage("/sms/login")
+                    .authenticationManager(new SmsCodeAuthenticationManager(userDetailService))
+                    .authenticationSuccessHandler(defaultSuccessHandler)
+                    .authenticationFailureHandler(defaultFailHandler);
+        });
+        return http.build();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+
+    /**
+     * 用户信息验证管理器，可按需求添加多个按顺序执行
+     */
+//    @Bean
+    ReactiveAuthenticationManager reactiveAuthenticationManager() {
+        LinkedList<ReactiveAuthenticationManager> managers = new LinkedList<>();
+        managers.add(new SmsCodeAuthenticationManager(userDetailService));
+        managers.add(new UsernamePassroedAuthenticationManager(userDetailService));
+        return new DelegatingReactiveAuthenticationManager(managers);
+    }
+
+
+
+}
