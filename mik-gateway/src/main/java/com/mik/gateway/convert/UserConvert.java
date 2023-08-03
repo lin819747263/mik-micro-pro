@@ -16,8 +16,6 @@ public class UserConvert extends ServerFormLoginAuthenticationConverter {
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
-        String mobile = exchange.getAttribute("mobile");
-        String code = exchange.getAttribute("code");
         Mono<MultiValueMap<String, String>> map = exchange.getFormData();
         return map.map(this::createAuthentication);
     }
