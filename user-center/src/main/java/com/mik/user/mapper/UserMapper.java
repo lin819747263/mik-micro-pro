@@ -1,7 +1,7 @@
 package com.mik.user.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mik.user.entity.User;
+import com.mybatisflex.core.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
