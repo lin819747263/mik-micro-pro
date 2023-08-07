@@ -1,4 +1,4 @@
-package com.mik.user;
+package com.mik;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

@@ -16,6 +16,7 @@
         <module>mik-gateway</module>
         <module>auth-server</module>
         <module>user-center</module>
+        <module>mik-security</module>
     </modules>
     <name>springcloud-study</name>
     <description>Demo project for Spring Boot</description>
@@ -27,6 +28,7 @@
 
         <fastjson.version>1.2.83</fastjson.version>
         <jjwt.version>0.7.0</jjwt.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +65,11 @@
                     <groupId>io.jsonwebtoken</groupId>
                     <artifactId>jjwt</artifactId>
                     <version>${jjwt.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                    <version>${commons-lang3.version}</version>
                 </dependency>
             </dependencies>
     </dependencyManagement>
