@@ -15,3 +15,8 @@ spring:
           enabled: true
       okhttp:
         enabled: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
