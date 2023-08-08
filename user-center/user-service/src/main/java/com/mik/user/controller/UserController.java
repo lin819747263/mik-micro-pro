@@ -1,5 +1,7 @@
 package com.mik.user.controller;
 
+import com.mik.user.api.dto.UserDTO;
+import com.mik.user.api.user.UserRpc;
 import com.mik.user.entity.User;
 import com.mik.user.mapper.UserMapper;
 import com.mik.user.service.UserService;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements UserRpc {
 
     @Autowired
     UserMapper userMapper;
@@ -30,4 +32,9 @@ public class UserController {
         return userService.listByConditions();
     }
 
+    @GetMapping("/getUserById")
+    @Override
+    public UserDTO getUserById(Long userId) {
+        return userService.getUserById(userId);
+    }
 }

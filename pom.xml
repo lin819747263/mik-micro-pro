@@ -17,6 +17,8 @@
         <module>auth-server</module>
         <module>user-center</module>
         <module>mik-security</module>
+        <module>mik-admin</module>
+        <module>mik-demo</module>
     </modules>
     <name>springcloud-study</name>
     <description>Demo project for Spring Boot</description>
@@ -85,5 +87,19 @@
             <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

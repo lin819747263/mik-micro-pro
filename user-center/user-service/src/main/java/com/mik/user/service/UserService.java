@@ -1,5 +1,7 @@
 package com.mik.user.service;
 
+import com.mik.user.api.dto.UserDTO;
+import com.mik.user.api.user.UserRpc;
 import com.mik.user.entity.User;
 import com.mik.user.mapper.UserMapper;
 import com.mybatisflex.core.query.QueryColumn;
@@ -20,4 +22,13 @@ public class UserService {
         return userMapper.selectListByCondition(condition);
     }
 
+    public UserDTO getUserById(Long userId) {
+        User user = userMapper.selectOneWithRelationsById(userId);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setAge(user.getAge());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setName(user.getName());
+        return userDTO;
+    }
 }
