@@ -4,5 +4,20 @@ spring:
     url: jdbc:mysql://localhost:3306/user?serverTimezone=GMT%2B8&useSSL=true
     username: root
     password: root
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          # RocketMQ 服务器地址
+          name-server: 192.168.68.114:9876
+
+      input-bindings:
+        consume1:
+          destination: test-topic1
+          group: broadcast-consumer
+      output-bindings:
+        output1: { destination: test-topic1, content-type: application/json }
+        output2: { destination: test-topic2, content-type: application/json }
+
 mybatis-plus:
   config-location: classpath:mapper/*.xml

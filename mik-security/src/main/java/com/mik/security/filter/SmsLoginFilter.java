@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ public class SmsLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        String mobile = request.getParameter("mobile").toString();
-        String code = request.getParameter("code").toString();
+        String mobile = request.getParameter("mobile");
+        String code = request.getParameter("code");
         SmsToken token = new SmsToken(new ArrayList<>(), mobile, code);
         return this.getAuthenticationManager().authenticate(token);
     }

@@ -9,7 +9,7 @@
 <!--        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
 <!--    </parent>-->
     <groupId>com.mik</groupId>
-    <artifactId>springcloud-study</artifactId>
+    <artifactId>springcloud-lab</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
