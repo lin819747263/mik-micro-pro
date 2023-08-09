@@ -14,8 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.mik</groupId>
+            <artifactId>mik-fr-mvc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mik</groupId>
