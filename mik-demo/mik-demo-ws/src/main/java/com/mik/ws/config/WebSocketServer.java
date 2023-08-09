@@ -1,4 +1,4 @@
-package com.mik.user.config;
+package com.mik.ws.config;
 
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;

@@ -1,18 +1,15 @@
-package com.mik.user.controller;
+package com.mik.ws.controller;
 
-import com.mik.user.config.WebSocketServer;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.mik.core.pojo.Result;
+import com.mik.ws.config.WebSocketServer;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller("web_Scoket_system")
+@RestController
 @RequestMapping("/api/socket")
 public class WsTestController {
 
@@ -25,9 +22,8 @@ public class WsTestController {
     }
 
     //推送数据接口
-    @ResponseBody
-    @RequestMapping("/socket/push/{cid}")
-    public Map pushToWeb(@PathVariable String cid, String message) {
+    @PostMapping("/socket/push/{cid}")
+    public Result pushToWeb(@PathVariable String cid, String message) {
         Map<String,Object> result = new HashMap<>();
         try {
             WebSocketServer.sendInfo(message, cid);
@@ -36,6 +32,6 @@ public class WsTestController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+        return Result.success(result);
     }
 }

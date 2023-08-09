@@ -1,5 +1,6 @@
 package com.mik.user.controller;
 
+import com.mik.core.exception.ServiceException;
 import com.mik.user.api.dto.UserDTO;
 import com.mik.user.api.user.UserRpc;
 import com.mik.user.entity.User;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 @RestController
