@@ -1,6 +1,6 @@
-package com.mik.user.controller;
+package com.mik.rockmq.controller;
 
-import com.mik.user.service.Sender;
+import com.mik.rockmq.service.Sender;
 import org.apache.rocketmq.client.apis.ClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,6 @@ public class RockMqTest {
 
     @Autowired
     Sender sender;
-
 
 
     @GetMapping("/send")

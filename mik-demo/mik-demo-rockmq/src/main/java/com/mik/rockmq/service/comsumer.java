@@ -1,4 +1,4 @@
-package com.mik.user.service;
+package com.mik.rockmq.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.apis.ClientConfiguration;

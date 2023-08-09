@@ -29,6 +29,10 @@
         <fastjson.version>1.2.83</fastjson.version>
         <jjwt.version>0.7.0</jjwt.version>
         <commons-lang3.version>3.9</commons-lang3.version>
+
+        <mybatis-flex.version>1.5.5</mybatis-flex.version>
+        <knife4j.version>4.2.0</knife4j.version>
+        <rocketmq-client.version>5.0.5</rocketmq-client.version>
     </properties>
 
     <dependencyManagement>
@@ -74,13 +78,47 @@
                 <dependency>
                     <groupId>com.mybatis-flex</groupId>
                     <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-                    <version>1.5.5</version>
+                    <version>${mybatis-flex.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>com.github.xiaoymin</groupId>
                     <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-                    <version>4.2.0</version>
+                    <version>${knife4j.version}</version>
                 </dependency>
+
+
+
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-fr-core</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-fr-db</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-fr-mvc</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-fr-openfegin</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>user-api</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.rocketmq</groupId>
+                    <artifactId>rocketmq-client-java</artifactId>
+                    <version>${rocketmq-client.version}</version>
+                </dependency>
+
             </dependencies>
     </dependencyManagement>
 
