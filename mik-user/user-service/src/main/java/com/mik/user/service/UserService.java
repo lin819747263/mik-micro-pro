@@ -15,15 +15,20 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.service.IService;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class UserService extends ServiceImpl<UserMapper, User> {
 
-    private final UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    @Value("${server.port}")
+    private Integer port;
 
 
     public List<User> listByConditions(){
@@ -46,6 +51,7 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         userDTO.setAge(18);
         userDTO.setEmail(user.getEmail());
         userDTO.setName(user.getUsername());
+        userDTO.setPort(port);
         return userDTO;
     }
 }
