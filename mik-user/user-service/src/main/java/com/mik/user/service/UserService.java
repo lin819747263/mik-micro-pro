@@ -13,6 +13,7 @@ import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.service.IService;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService extends ServiceImpl<UserMapper, User> {
 
     private final UserMapper userMapper;
 

@@ -1,4 +1,4 @@
-package com.mik.gateway.result;
+package com.mik.core.constant;
 
 public enum ResultCode {
     /**

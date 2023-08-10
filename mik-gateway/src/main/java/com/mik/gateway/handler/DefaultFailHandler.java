@@ -1,8 +1,8 @@
 package com.mik.gateway.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mik.gateway.result.ResponseResult;
-import com.mik.gateway.result.ResultCode;
+import com.mik.core.constant.ResultCode;
+import com.mik.core.pojo.Result;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,23 +22,23 @@ public class DefaultFailHandler implements ServerAuthenticationFailureHandler {
     @Override
     public Mono<Void> onAuthenticationFailure(WebFilterExchange webFilterExchange, AuthenticationException exception) {
         ServerHttpResponse response = webFilterExchange.getExchange().getResponse();
-        ResponseResult result = new ResponseResult();
+        Result result = new Result<>();
         if (exception instanceof UsernameNotFoundException) {
             // 用户不存在
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setMsg(exception.getMessage());
+            result.setDesc(exception.getMessage());
         } else if (exception instanceof BadCredentialsException) {
             // 密码错误
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setMsg(exception.getMessage());
+            result.setDesc(exception.getMessage());
         } else if (exception instanceof LockedException) {
             // 用户被锁
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setMsg(exception.getMessage());
+            result.setDesc(exception.getMessage());
         } else {
             // 系统错误
             result.setCode(ResultCode.SERVER_ERROR.getCode());
-            result.setMsg(exception.getMessage());
+            result.setDesc(exception.getMessage());
         }
         String body = JSONObject.toJSONString(result);
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));

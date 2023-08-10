@@ -1,6 +1,5 @@
 package com.mik.user.controller;
 
-import com.mik.core.exception.ServiceException;
 import com.mik.core.pojo.PageInput;
 import com.mik.core.pojo.PageResult;
 import com.mik.core.pojo.Result;
@@ -8,14 +7,13 @@ import com.mik.user.api.dto.UserDTO;
 import com.mik.user.api.user.UserRpc;
 import com.mik.user.dto.UserListDTO;
 import com.mik.user.entity.User;
-import com.mik.user.mapper.UserMapper;
 import com.mik.user.service.UserService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.rmi.ServerException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +22,12 @@ import java.util.List;
 public class UserController implements UserRpc {
 
     @Autowired
-    UserMapper userMapper;
-
-    @Autowired
     UserService userService;
 
     @GetMapping("/all")
+    @CircuitBreaker(name = "backendA", fallbackMethod = "fallBack")
     public List<User> listUser(){
-        return userMapper.selectAll();
+        return userService.list();
     }
 
     @GetMapping("/save")
@@ -44,7 +40,7 @@ public class UserController implements UserRpc {
         user.setSex(1);
         user.setAvatar("http://dsfsdfsd.jpg");
         user.setBirthday(new Date());
-        userMapper.insert(user);
+        userService.save(user);
     }
 
     @GetMapping("/list")

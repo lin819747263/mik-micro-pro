@@ -1,7 +1,7 @@
 package com.mik.gateway.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mik.gateway.result.ResponseResult;
+import com.mik.core.pojo.Result;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -33,7 +33,7 @@ public class DefaultSuccessHandler implements ServerAuthenticationSuccessHandler
 //                .map(n->n.getKey()+" = " + n.getValue().asString()).collect(Collectors.joining(", ")));
 
 
-        ResponseResult<String> result = ResponseResult.success("874574748486486486");
+        Result<String> result = Result.success("874574748486486486");
         String body = JSONObject.toJSONString(result);
 
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
