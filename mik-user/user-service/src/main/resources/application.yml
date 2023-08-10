@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -68,4 +69,5 @@ resilience4j:
       backendB:
         timeoutDuration: 1s
         cancelRunningFuture: false
-
+server:
+  port: ${random.int(2000,8000)}
