@@ -21,7 +21,7 @@ public class DefaultDeniedHandler implements ServerAccessDeniedHandler {
         ServerHttpResponse response = exchange.getResponse();
         Result result = new Result();
         result.setCode(ResultCode.SERVER_ERROR.getCode());
-        result.setDesc("认证失败");
+        result.setMsg("认证失败");
         String body = JSONObject.toJSONString(result);
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));

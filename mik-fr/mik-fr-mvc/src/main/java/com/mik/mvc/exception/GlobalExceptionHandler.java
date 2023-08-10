@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
         log.error("业务异常", ex);
         Result result = new Result();
         result.setCode(1);
-        result.setDesc(ex.getMessage());
+        result.setMsg(ex.getMessage());
         return result;
     }
 
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         log.error("未处理异常", ex);
         Result result = new Result();
         result.setCode(666);
-        result.setDesc(ex.getMessage());
+        result.setMsg(ex.getMessage());
         return result;
     }
 

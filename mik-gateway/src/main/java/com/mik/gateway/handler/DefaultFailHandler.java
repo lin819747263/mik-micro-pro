@@ -26,19 +26,19 @@ public class DefaultFailHandler implements ServerAuthenticationFailureHandler {
         if (exception instanceof UsernameNotFoundException) {
             // 用户不存在
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setDesc(exception.getMessage());
+            result.setMsg(exception.getMessage());
         } else if (exception instanceof BadCredentialsException) {
             // 密码错误
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setDesc(exception.getMessage());
+            result.setMsg(exception.getMessage());
         } else if (exception instanceof LockedException) {
             // 用户被锁
             result.setCode(ResultCode.SUCCESS.getCode());
-            result.setDesc(exception.getMessage());
+            result.setMsg(exception.getMessage());
         } else {
             // 系统错误
             result.setCode(ResultCode.SERVER_ERROR.getCode());
-            result.setDesc(exception.getMessage());
+            result.setMsg(exception.getMessage());
         }
         String body = JSONObject.toJSONString(result);
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));

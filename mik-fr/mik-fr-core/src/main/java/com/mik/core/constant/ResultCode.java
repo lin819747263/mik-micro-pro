@@ -8,7 +8,11 @@ public enum ResultCode {
     /**
      *
      */
-    SERVER_ERROR(500);
+    SERVER_ERROR(500),
+    /**
+     * Unauthorized
+     */
+    UNAUTHORTHORIZED(401);
 
 
     private Integer code;

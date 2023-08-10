@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Result<T> {
     private Integer code = 0;
-    private String desc = "";
+    private String msg = "";
     private T data;
 
     public Result() {
@@ -20,9 +20,9 @@ public class Result<T> {
         this.data = data;
     }
 
-    public Result(Integer code, String desc) {
+    public Result(Integer code, String msg) {
         this.code = code;
-        this.desc = desc;
+        this.msg = msg;
     }
 
     public static <T> Result<T> success(T data){
