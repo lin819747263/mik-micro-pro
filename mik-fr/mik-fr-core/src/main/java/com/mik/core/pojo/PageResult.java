@@ -7,13 +7,13 @@ import java.util.List;
 @Data
 public class PageResult<T> {
     private Long total;
-    private List<T> data;
+    private List<T> records;
 
     public PageResult() {
     }
 
-    public PageResult(Long total, List<T> data) {
+    public PageResult(Long total, List<T> records) {
         this.total = total;
-        this.data = data;
+        this.records = records;
     }
 }

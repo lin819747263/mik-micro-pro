@@ -1,8 +1,12 @@
 package com.mik.user.controller;
 
 import com.mik.core.exception.ServiceException;
+import com.mik.core.pojo.PageInput;
+import com.mik.core.pojo.PageResult;
+import com.mik.core.pojo.Result;
 import com.mik.user.api.dto.UserDTO;
 import com.mik.user.api.user.UserRpc;
+import com.mik.user.dto.UserListDTO;
 import com.mik.user.entity.User;
 import com.mik.user.mapper.UserMapper;
 import com.mik.user.service.UserService;
@@ -53,4 +57,13 @@ public class UserController implements UserRpc {
     public UserDTO getUserById(Long userId) {
         return userService.getUserById(userId);
     }
+
+    @GetMapping("/listByConditionPage")
+    public Result<PageResult<UserListDTO>> listByConditionPage(Integer pageNum, Integer pageSize){
+        PageInput input = new PageInput();
+        input.setPageNum(pageNum);
+        input.setPageSize(pageSize);
+        return Result.success(userService.listByConditionPage(input));
+    }
+
 }
