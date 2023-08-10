@@ -1,2 +1,7 @@
 server:
   port: 8081
+spring:
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true

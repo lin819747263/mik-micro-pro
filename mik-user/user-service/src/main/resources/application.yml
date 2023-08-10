@@ -6,6 +6,8 @@ spring:
     password: root
   cloud:
     openfeign:
+      circuitbreaker:
+        enabled: true
       compression:
         request:
           enabled: true
@@ -21,3 +23,16 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
+
+#resilience4j:
+#  bulkhead:
+#    instances:
+#      test01:
+#        max-attempts: 2
+#        wait-duration: 1s
+#    backends:
+#  circuitbreaker:
+#    instances:
+#    backends:
+#  ratelimiter:
+#    instances:

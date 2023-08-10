@@ -25,10 +25,10 @@ public class UserService {
     public UserDTO getUserById(Long userId) {
         User user = userMapper.selectOneWithRelationsById(userId);
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setAge(user.getAge());
+        userDTO.setId(user.getUserId());
+        userDTO.setAge(18);
         userDTO.setEmail(user.getEmail());
-        userDTO.setName(user.getName());
+        userDTO.setName(user.getUsername());
         return userDTO;
     }
 }

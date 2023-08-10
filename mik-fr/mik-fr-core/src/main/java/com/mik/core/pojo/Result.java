@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Result<T> {
-    private Integer code;
-    private String desc;
+    private Integer code = 0;
+    private String desc = "";
     private T data;
 
     public Result() {
