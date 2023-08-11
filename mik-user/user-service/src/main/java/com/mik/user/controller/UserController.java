@@ -4,8 +4,8 @@ import com.mik.core.pojo.PageInput;
 import com.mik.core.pojo.PageResult;
 import com.mik.core.pojo.Result;
 import com.mik.user.api.dto.UserDTO;
+import com.mik.user.api.dto.UserListDTO;
 import com.mik.user.api.user.UserRpc;
-import com.mik.user.dto.UserListDTO;
 import com.mik.user.entity.User;
 import com.mik.user.service.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -53,6 +53,11 @@ public class UserController implements UserRpc {
     @Override
     public UserDTO getUserById(Long userId) {
         return userService.getUserById(userId);
+    }
+
+    @Override
+    public UserListDTO getUserByIdentify(String identify) {
+        return userService.getUserByIdentify(identify);
     }
 
     @GetMapping("/listByConditionPage")

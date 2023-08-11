@@ -1,6 +1,7 @@
 package com.mik.user.api.fallback;
 
 import com.mik.user.api.dto.UserDTO;
+import com.mik.user.api.dto.UserListDTO;
 import com.mik.user.api.user.UserRpc;
 import org.springframework.stereotype.Component;
 
@@ -13,5 +14,10 @@ public class UserFallBack implements UserRpc {
         userDTO.setName("默认数据");
         userDTO.setEmail("666@qq.com");
         return userDTO;
+    }
+
+    @Override
+    public UserListDTO getUserByIdentify(String identify) {
+        return new UserListDTO();
     }
 }

@@ -5,3 +5,7 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+
+logging:
+  level:
+    com.mik.user.api.user: debug

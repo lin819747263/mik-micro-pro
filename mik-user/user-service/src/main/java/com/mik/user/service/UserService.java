@@ -3,8 +3,7 @@ package com.mik.user.service;
 import com.mik.core.pojo.PageInput;
 import com.mik.core.pojo.PageResult;
 import com.mik.user.api.dto.UserDTO;
-import com.mik.user.api.user.UserRpc;
-import com.mik.user.dto.UserListDTO;
+import com.mik.user.api.dto.UserListDTO;
 import com.mik.user.entity.User;
 import com.mik.user.mapper.UserMapper;
 import com.mik.user.utils.PageUtil;
@@ -12,9 +11,7 @@ import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.core.service.IService;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -53,5 +50,13 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         userDTO.setName(user.getUsername());
         userDTO.setPort(port);
         return userDTO;
+    }
+
+    public UserListDTO getUserByIdentify(String identify) {
+        QueryCondition condition =  QueryCondition.create(new QueryColumn("mobile"), "=", identify)
+                .or(QueryCondition.create(new QueryColumn("email"), "=", identify))
+                .or(QueryCondition.create(new QueryColumn("username"), "=", identify));
+        QueryWrapper wrapper = QueryWrapper.create().select().from("user").where(condition);
+        return userMapper.selectOneByQueryAs(wrapper, UserListDTO.class);
     }
 }

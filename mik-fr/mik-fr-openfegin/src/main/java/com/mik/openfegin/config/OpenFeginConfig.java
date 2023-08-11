@@ -9,6 +9,6 @@ public class OpenFeginConfig {
 
     @Bean
     Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
+        return Logger.Level.BASIC;
     }
 }
