@@ -55,6 +55,7 @@ public class UserController implements UserRpc {
         return userService.getUserById(userId);
     }
 
+    @GetMapping("/getUserByIdentify")
     @Override
     public UserListDTO getUserByIdentify(String identify) {
         return userService.getUserByIdentify(identify);

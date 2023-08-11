@@ -9,3 +9,8 @@ spring:
           filters:
 #            - PrefixPath=/u
             - StripPrefix=1
+  data:
+    redis:
+      host: 192.168.69.209
+      password: swGUBqpw@Sg8
+      database: 6

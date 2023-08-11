@@ -2,7 +2,11 @@ package com.mik.gateway.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mik.core.pojo.Result;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
@@ -16,26 +20,21 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class DefaultSuccessHandler implements ServerAuthenticationSuccessHandler {
 
+    @Autowired
+    ReactiveRedisTemplate reactiveRedisTemplate;
+
     @Override
     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange, Authentication authentication) {
         ServerHttpResponse response = webFilterExchange.getExchange().getResponse();
         response.setStatusCode(HttpStatus.OK);
-//        Algorithm algorithm = Ed448.Algorithm.HMAC256("secret");
-//        String token = JWT.create()
-//                .withClaim("uid", "123456")
-//                .withIssuedAt(new Date())
-//                .withIssuer("rkproblem")
-//                .sign(algorithm);
-//        JWTVerifier verifier = JWT.require(algorithm)
-//                .build();
-//        DecodedJWT jwt = verifier.verify(token);
-//        System.out.println(jwt.getClaims().entrySet().stream()
-//                .map(n->n.getKey()+" = " + n.getValue().asString()).collect(Collectors.joining(", ")));
 
+        String auth = Jwts.builder().setSubject("test").claim(authentication.getCredentials().toString(), authentication.getPrincipal())
+                .signWith(SignatureAlgorithm.HS256, "test").compact();
 
-        Result<String> result = Result.success("874574748486486486");
+        Mono<Boolean> res = reactiveRedisTemplate.opsForValue().set("auth" +  authentication.getCredentials(), auth);
+
+        Result<String> result = Result.success("登录成功");
         String body = JSONObject.toJSONString(result);
-
         DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));
     }
