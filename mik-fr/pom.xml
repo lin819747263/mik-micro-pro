@@ -17,6 +17,7 @@
         <module>mik-fr-db</module>
         <module>mik-fr-mvc</module>
         <module>mik-fr-openfegin</module>
+        <module>mik-fr-client</module>
     </modules>
 
 

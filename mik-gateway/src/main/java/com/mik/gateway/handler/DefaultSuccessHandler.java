@@ -28,7 +28,7 @@ public class DefaultSuccessHandler implements ServerAuthenticationSuccessHandler
         ServerHttpResponse response = webFilterExchange.getExchange().getResponse();
         response.setStatusCode(HttpStatus.OK);
 
-        String auth = Jwts.builder().setSubject("test").claim(authentication.getCredentials().toString(), authentication.getPrincipal())
+        String auth = Jwts.builder().setSubject("test").setId("666666").claim(authentication.getCredentials().toString(), authentication.getPrincipal())
                 .signWith(SignatureAlgorithm.HS256, "test").compact();
 
         Mono<Boolean> res = reactiveRedisTemplate.opsForValue().set("auth" +  authentication.getCredentials(), auth);

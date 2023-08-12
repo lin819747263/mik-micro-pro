@@ -2,7 +2,7 @@ package com.mik.security.filter;
 
 import com.mik.security.handler.FailureHandler;
 import com.mik.security.handler.SuccessHandler;
-import com.mik.security.token.SmsToken;
+import com.mik.security.token.UsernamePasswordToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,22 +18,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Component
-public class SmsLoginFilter extends AbstractAuthenticationProcessingFilter {
+public class UsernamePasswordFilter extends AbstractAuthenticationProcessingFilter {
+
     @Autowired
     SuccessHandler successHandler;
     @Autowired
     FailureHandler failureHandler;
 
-    public SmsLoginFilter(AuthenticationManager authenticationManager) {
-        super("/sms/login", authenticationManager);
+    public UsernamePasswordFilter(AuthenticationManager authenticationManager) {
+        super("/login", authenticationManager);
     }
-
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        String mobile = request.getParameter("mobile");
-        String code = request.getParameter("code");
-        SmsToken token = new SmsToken(new ArrayList<>(), mobile, code);
+        String mobile = request.getParameter("username");
+        String code = request.getParameter("password");
+        UsernamePasswordToken token = new UsernamePasswordToken(new ArrayList<>(), mobile, code);
         return this.getAuthenticationManager().authenticate(token);
     }
 

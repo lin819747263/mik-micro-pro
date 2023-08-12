@@ -114,6 +114,16 @@
                     <version>0.0.1-SNAPSHOT</version>
                 </dependency>
                 <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-fr-client</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.mik</groupId>
+                    <artifactId>mik-security</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
+                <dependency>
                     <groupId>org.apache.rocketmq</groupId>
                     <artifactId>rocketmq-client-java</artifactId>
                     <version>${rocketmq-client.version}</version>
