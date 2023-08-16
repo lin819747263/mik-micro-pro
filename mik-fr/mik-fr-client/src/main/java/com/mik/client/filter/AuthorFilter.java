@@ -31,6 +31,7 @@ public class AuthorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if(whiteList.contains(request.getRequestURI())){
             filterChain.doFilter(request, response);
+            return;
         }
 
 
@@ -58,7 +59,8 @@ public class AuthorFilter extends OncePerRequestFilter {
         UserInfoToken token = new UserInfoToken(new ArrayList<>(), username, tokenId);
         token.setDetails(null);
         SecurityContextHolder.getContext().setAuthentication(token);
-        filterChain.doFilter(request,response);
+
+        filterChain.doFilter(request, response);
     }
 
     private void unAuth(HttpServletResponse response) throws IOException {

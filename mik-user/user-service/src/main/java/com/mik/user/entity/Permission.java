@@ -17,4 +17,6 @@ public class Permission extends BaseEntity {
     private String name ;
     private Integer type ;
     private Long parent ;
+    private String icon ;
+    private String path ;
 }

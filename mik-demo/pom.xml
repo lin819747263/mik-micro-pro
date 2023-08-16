@@ -14,6 +14,7 @@
     <modules>
         <module>mik-demo-rockmq</module>
         <module>mik-demo-ws</module>
+        <module>mik-demo-flink</module>
     </modules>
 
 </project>
