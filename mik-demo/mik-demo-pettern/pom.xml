@@ -3,19 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>springcloud-lab</artifactId>
+        <artifactId>mik-demo</artifactId>
         <groupId>com.mik</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mik-demo</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>mik-demo-rockmq</module>
-        <module>mik-demo-ws</module>
-        <module>mik-demo-flink</module>
-        <module>mik-demo-pettern</module>
-    </modules>
+    <artifactId>mik-demo-pettern</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
 
 </project>
